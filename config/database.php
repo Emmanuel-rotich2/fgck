@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 
 
-$host     = 'localhost';
-$database = 'pastorco_fgck_joyland';
-$username = '';
-$password = '';
+$localConfig = is_file(__DIR__ . '/local.php') ? require __DIR__ . '/local.php' : [];
+$databaseConfig = $localConfig['database'] ?? [];
+
+$host     = getenv('DB_HOST') ?: ($databaseConfig['host'] ?? 'localhost');
+$database = getenv('DB_NAME') ?: ($databaseConfig['name'] ?? 'pastorco_fgck_joyland');
+$username = getenv('DB_USER') ?: ($databaseConfig['username'] ?? '');
+$password = getenv('DB_PASSWORD') ?: ($databaseConfig['password'] ?? '');
 
 $charset = 'utf8mb4';
 
